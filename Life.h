@@ -1,15 +1,12 @@
 #pragma once
 // #include <conio.h>
 #include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
 #include <utility>
 #include <vector>
 #include <chrono>
 #include <thread>
 #include <unistd.h>
-#include <cstdlib>
 #include <termios.h>
 // #include <windows.h>
 using namespace std;
@@ -25,6 +22,7 @@ struct Board
 	int countSurrounding(int y, int x);
 	void print() const;
 
+	bool operator==(const Board& rBoard);
 	Board& operator=(const Board& rBoard);
 };
 

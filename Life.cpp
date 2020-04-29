@@ -59,6 +59,14 @@ void Board::GenerateRandomBoard()
 		}
 }
 
+void recursiveGenerate()
+{
+	Board board;
+	board.GenerateRandomBoard();
+	board.scan();
+	recursiveGenerate();
+}
+
 void Board::configure()
 {
 	char c = 's';
@@ -120,13 +128,21 @@ void Board::configure()
 			break;
 			
 		}
+
 		case 'r':
 		{
 			GenerateRandomBoard();
 			break;
 		}
 
+		case '0':
+		{
+			recursiveGenerate();
+			break;
 		}
+
+		}
+
 		displayBoard.board[current.first][current.second] = '*';
 		system("clear");
 		displayBoard.print();
@@ -134,12 +150,25 @@ void Board::configure()
 	}
 }
 
+void bufferFill(Board* buffer, unsigned size)
+{
+	for (unsigned i = 0; i < size; i++)
+	{
+		buffer[i] = Board();
+	}
+}
+
 void Board::scan()
 {
 	Board temp;
 	temp = *this;
+	Board boardBuffer[15];
+	bufferFill(boardBuffer, 15);
+	unsigned bufferCount = 0;
+	unsigned bufferIndex = 0;
+	bool done = false;
 
-	while (true)
+	while (!done)
 	{
 		temp = *this;
 		for (int y = 0; y < 50; ++y)
@@ -162,8 +191,21 @@ void Board::scan()
 				}
 			}
 		}
+
+		for (unsigned i = 0; i < 15; i++)
+		{
+			if (*this == boardBuffer[i])
+			{
+				done = true;
+			}
+		}
+		boardBuffer[bufferIndex] = *this;
+		bufferIndex = (bufferIndex + 1) % 15;
+
+
 		system("clear");
 		print();
+
 		usleep(300000);
 	}
 
@@ -211,4 +253,15 @@ Board& Board::operator=(const Board& rBoard)
 	}
 
 	return *this;
+}
+
+bool Board::operator==(const Board& rBoard)
+{
+	for (unsigned i = 0; i < 50; i++)
+		for (unsigned j = 0; j < 50; j++)
+		{
+			if (board[i][j] != rBoard.board[i][j])
+				return false;
+		}
+	return true;
 }
