@@ -53,7 +53,7 @@ void Board::GenerateRandomBoard()
 	for (unsigned i = 0; i < 50; i++)
 		for (unsigned j = 0; j < 50; j++)
 		{
-			random = rand() % 8;
+			random = rand() % 2;
 			if (random == 1)
 				board[i][j] = 'O';
 		}
