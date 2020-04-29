@@ -6,6 +6,6 @@ int main()
 	thisBoard.configure();
 	thisBoard.scan();
 
-	system("Pause");
+	// system("Pause");
 	return 0;
 }

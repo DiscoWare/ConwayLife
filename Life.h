@@ -1,11 +1,14 @@
 #pragma once
-#include <conio.h>
+// #include <conio.h>
 #include <iostream>
 #include <utility>
 #include <vector>
 #include <chrono>
 #include <thread>
-#include <windows.h>
+#include <unistd.h>
+#include <cstdlib>
+#include <termios.h>
+// #include <windows.h>
 using namespace std;
 
 struct Board
