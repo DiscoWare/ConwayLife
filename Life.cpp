@@ -25,6 +25,7 @@ char _getch(void)
 
 Board::Board()
 {
+	cycleCount = 0;
 	for (int i = 0; i < 50; ++i)
 	{
 		for (int e = 0; e < 50; ++e)
@@ -46,6 +47,22 @@ void Board:: print() const
 	}
 }
 
+void Board::writeToFile() const
+{
+	ofstream os;
+	os.open("output.txt");
+	for (unsigned i = 0; i < 50; i++)
+	{
+		for (unsigned j = 0; j < 50; j++)
+		{
+			os << board[i][j] << " ";
+		}
+		os << endl;
+	}
+	os << "Count: " << cycleCount;
+	os.close();
+}
+
 void Board::GenerateRandomBoard()
 {
 	int y, x = 0;
@@ -53,18 +70,44 @@ void Board::GenerateRandomBoard()
 	for (unsigned i = 0; i < 50; i++)
 		for (unsigned j = 0; j < 50; j++)
 		{
-			random = rand() % 2;
+			random = rand() % 20;
 			if (random == 1)
 				board[i][j] = 'O';
 		}
 }
 
+void Board::readFromFile()
+{
+	ifstream is;
+	is.open("input.txt");
+	char c;
+	for (unsigned i = 0; i < 50; i++)
+	{
+		for (unsigned j = 0; j < 50; j++)
+		{
+			is >> c;
+			board[i][j] = c;
+		}
+	}
+}
+
 void recursiveGenerate()
 {
-	Board board;
-	board.GenerateRandomBoard();
-	board.scan();
-	recursiveGenerate();
+	unsigned longestSequence = 0;
+	Board tempBoard;
+	while (true)
+	{
+		Board board;
+		board.GenerateRandomBoard();
+		tempBoard = board;
+		board.scan();
+		if (board.cycleCount > longestSequence)
+		{
+			tempBoard.cycleCount = board.cycleCount;
+			tempBoard.writeToFile();
+			longestSequence = board.cycleCount;
+		}
+	}
 }
 
 void Board::configure()
@@ -141,6 +184,13 @@ void Board::configure()
 			break;
 		}
 
+		case '1':
+		{
+			readFromFile();
+			displayBoard = *this;
+			break;
+		}
+
 		}
 
 		displayBoard.board[current.first][current.second] = '*';
@@ -207,12 +257,14 @@ void Board::scan()
 		system("clear");
 		print();
 
-		usleep(300000);
+		cycleCount++;
+		cout << cycleCount << endl;
+		// usleep(300000);
 	}
 
 }
 
-int Board::countSurrounding(int y, int x)
+int Board::countSurrounding(int y, int x) const
 {
 	int count = 0;
 	vector<int> yChoices = { y };
@@ -256,7 +308,7 @@ Board& Board::operator=(const Board& rBoard)
 	return *this;
 }
 
-bool Board::operator==(const Board& rBoard)
+bool Board::operator==(const Board& rBoard) const
 {
 	for (unsigned i = 0; i < 50; i++)
 		for (unsigned j = 0; j < 50; j++)
