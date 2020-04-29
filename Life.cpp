@@ -46,6 +46,19 @@ void Board:: print() const
 	}
 }
 
+void Board::GenerateRandomBoard()
+{
+	int y, x = 0;
+	int random;
+	for (unsigned i = 0; i < 50; i++)
+		for (unsigned j = 0; j < 50; j++)
+		{
+			random = rand() % 8;
+			if (random == 1)
+				board[i][j] = 'O';
+		}
+}
+
 void Board::configure()
 {
 	char c = 's';
@@ -54,7 +67,7 @@ void Board::configure()
 	pair<int, int> current (0, 0);
 	displayBoard.print();
 	cout << endl;
-	while (c != 'q')
+	while (c != 'q' && c != 'r')
 	{
 		displayBoard.board[current.first][current.second] = board[current.first][current.second];
 		c = _getch();
@@ -107,6 +120,12 @@ void Board::configure()
 			break;
 			
 		}
+		case 'r':
+		{
+			GenerateRandomBoard();
+			break;
+		}
+
 		}
 		displayBoard.board[current.first][current.second] = '*';
 		system("clear");

@@ -2,6 +2,7 @@
 
 int main()
 {
+	srand (time(NULL));
 	Board thisBoard;
 	thisBoard.configure();
 	thisBoard.scan();

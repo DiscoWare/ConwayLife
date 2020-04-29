@@ -1,6 +1,9 @@
 #pragma once
 // #include <conio.h>
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include <utility>
 #include <vector>
 #include <chrono>
@@ -18,6 +21,7 @@ struct Board
 	
 	void scan();
 	void configure();
+	void GenerateRandomBoard();
 	int countSurrounding(int y, int x);
 	void print() const;
 
