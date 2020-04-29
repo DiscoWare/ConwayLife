@@ -162,8 +162,9 @@ void Board::scan()
 {
 	Board temp;
 	temp = *this;
-	Board boardBuffer[15];
-	bufferFill(boardBuffer, 15);
+	unsigned boardBufferSize = 50;
+	Board boardBuffer[boardBufferSize];
+	bufferFill(boardBuffer, boardBufferSize);
 	unsigned bufferCount = 0;
 	unsigned bufferIndex = 0;
 	bool done = false;
@@ -192,7 +193,7 @@ void Board::scan()
 			}
 		}
 
-		for (unsigned i = 0; i < 15; i++)
+		for (unsigned i = 0; i < boardBufferSize; i++)
 		{
 			if (*this == boardBuffer[i])
 			{
@@ -200,7 +201,7 @@ void Board::scan()
 			}
 		}
 		boardBuffer[bufferIndex] = *this;
-		bufferIndex = (bufferIndex + 1) % 15;
+		bufferIndex = (bufferIndex + 1) % boardBufferSize;
 
 
 		system("clear");
