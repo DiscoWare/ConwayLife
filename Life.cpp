@@ -59,7 +59,7 @@ void Board::writeToFile() const
 		}
 		os << endl;
 	}
-	os << "Count: " << cycleCount;
+	os << "Count: " << cycleCount << "\n\n";
 	os.close();
 }
 
