@@ -259,7 +259,7 @@ void Board::scan()
 
 		cycleCount++;
 		cout << cycleCount << endl;
-		// usleep(300000);
+		usleep(300000);
 	}
 
 }
